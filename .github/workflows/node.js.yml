@@ -29,5 +29,4 @@ jobs:
     - run: npm ci
     - run: npx eslint '**/*.js' --fix
     - run: npx prettier '**/*.{json,sol,md}' --write
-    - run: npx solhint 'contracts/**/*.sol' --fix
     - run: npx hardhat test
