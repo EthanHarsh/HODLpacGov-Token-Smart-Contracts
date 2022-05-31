@@ -28,5 +28,4 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npx eslint '**/*.js' --fix
-    - run: npx prettier '**/*.{json,sol,md}' --write
     - run: npx hardhat test

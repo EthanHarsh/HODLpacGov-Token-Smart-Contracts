@@ -10,17 +10,28 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpg
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract HODLpacGov is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, PausableUpgradeable, AccessControlUpgradeable, ERC20PermitUpgradeable, ERC20VotesUpgradeable, UUPSUpgradeable {
+contract HODLpacGov is
+    Initializable,
+    ERC20Upgradeable,
+    ERC20BurnableUpgradeable,
+    PausableUpgradeable,
+    AccessControlUpgradeable,
+    ERC20PermitUpgradeable,
+    ERC20VotesUpgradeable,
+    UUPSUpgradeable
+{
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
-    bytes32 public constant TRANSFER_TOKEN_ROLE = keccak256("TRANSFER_TOKEN_ROLE");
-    bytes32 public constant TRANSFER_FROM_TOKEN_ROLE = keccak256("TRANSFER_FROM_TOKEN_ROLE");
+    bytes32 public constant TRANSFER_TOKEN_ROLE =
+        keccak256("TRANSFER_TOKEN_ROLE");
+    bytes32 public constant TRANSFER_FROM_TOKEN_ROLE =
+        keccak256("TRANSFER_FROM_TOKEN_ROLE");
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() initializer {}
 
-    function initialize() initializer public {
+    function initialize() public initializer {
         __ERC20_init("HODLpacGov", "HODL");
         __ERC20Burnable_init();
         __Pausable_init();
@@ -48,39 +59,49 @@ contract HODLpacGov is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable
         _mint(to, amount);
     }
 
-    function transfer(address to, uint256 amount) public override onlyRole(TRANSFER_TOKEN_ROLE) returns(bool) {
+    function transfer(address to, uint256 amount)
+        public
+        override
+        onlyRole(TRANSFER_TOKEN_ROLE)
+        returns (bool)
+    {
         address owner = _msgSender();
         _transfer(owner, to, amount);
         return true;
     }
 
-    function transferFrom(address from, address to, uint256 amount) public override onlyRole(TRANSFER_FROM_TOKEN_ROLE) returns(bool) {
+    function transferFrom(
+        address from,
+        address to,
+        uint256 amount
+    ) public override onlyRole(TRANSFER_FROM_TOKEN_ROLE) returns (bool) {
         address spender = _msgSender();
         _spendAllowance(from, spender, amount);
         _transfer(from, to, amount);
         return true;
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 amount)
-        internal
-        whenNotPaused
-        override
-    {
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override whenNotPaused {
         super._beforeTokenTransfer(from, to, amount);
     }
 
     function _authorizeUpgrade(address newImplementation)
         internal
-        onlyRole(UPGRADER_ROLE)
         override
+        onlyRole(UPGRADER_ROLE)
     {}
 
     // The following functions are overrides required by Solidity.
 
-    function _afterTokenTransfer(address from, address to, uint256 amount)
-        internal
-        override(ERC20Upgradeable, ERC20VotesUpgradeable)
-    {
+    function _afterTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
         super._afterTokenTransfer(from, to, amount);
     }
 
