@@ -1,6 +1,6 @@
 const { expect } = require("chai");
 const { ethers, upgrades } = require("hardhat");
-const { expectRevert, BN } = require("@openzeppelin/test-helpers");
+const { expectRevert } = require("@openzeppelin/test-helpers");
 
 describe("HODLpacGov Token Contract", function () {
   let HODLpacGov;
@@ -8,11 +8,10 @@ describe("HODLpacGov Token Contract", function () {
   let owner;
   let addr1;
   let addr2;
-  let addrs;
 
   beforeEach(async function () {
     HODLpacGov = await ethers.getContractFactory("HODLpacGov");
-    [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
+    [owner, addr1, addr2] = await ethers.getSigners();
 
     token = await upgrades.deployProxy(HODLpacGov, {
       kind: "uups",
