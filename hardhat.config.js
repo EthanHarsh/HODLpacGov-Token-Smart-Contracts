@@ -50,10 +50,6 @@ module.exports = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    fantomTestnet: {
-      url: "https://rpc.testnet.fantom.network/",
-      accounts: [`${process.env.FANTOM_TESTNET_PRIVATE_KEY}`],
-    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
