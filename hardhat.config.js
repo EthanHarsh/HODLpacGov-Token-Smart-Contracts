@@ -50,6 +50,13 @@ module.exports = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    polygonMainnet: {
+      url: process.env.POLYGON_URL || "",
+      accounts:
+        process.env.HODLPAC_ETH_MAINNET_PRIVATE_KEY !== undefined
+          ? [process.env.HODLPAC_ETH_MAINNET_PRIVATE_KEY]
+          : [],
+    }
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
