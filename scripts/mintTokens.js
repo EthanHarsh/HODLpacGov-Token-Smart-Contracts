@@ -1,23 +1,20 @@
 const { ethers } = require("hardhat");
 
-transferOwnership();
+mintTokens();
 
-async function transferOwnership() {
+async function mintTokens() {
   const [owner] = await ethers.getSigners();
   const HODLpacGov = await ethers.getContractAt(
     getAbi(),
     "0xBaeCF55751F5a61aebf2546177125Ddc706Dc2E4",
     owner
   );
-  console.log(HODLpacGov);
-  const transferTokenRoleHash = await HODLpacGov.TRANSFER_TOKEN_ROLE();
 
   const rinSafe = "0xa104C387BE806d7c50e44776f59814f4C5B0FEA4";
 
-  const grantRole = await HODLpacGov.grantRole(transferTokenRoleHash, rinSafe);
-  const wait = await grantRole.wait();
-  console.log("Wait");
-  console.log(wait);
+  const mint = await HODLpacGov.mint(rinSafe, ethers.utils.parseEther("40865"));
+  const tx = await mint.wait();
+  console.log(tx);
 }
 function getAbi() {
   const abi = [
