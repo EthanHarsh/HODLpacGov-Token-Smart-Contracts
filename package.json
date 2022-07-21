@@ -41,7 +41,7 @@
     "web3": "^1.7.1"
   },
   "dependencies": {
-    "@openzeppelin/contracts-upgradeable": "^4.5.2",
+    "@openzeppelin/contracts-upgradeable": "^4.7.1",
     "@openzeppelin/hardhat-upgrades": "^1.17.0",
     "@openzeppelin/test-helpers": "^0.5.15"
   }
